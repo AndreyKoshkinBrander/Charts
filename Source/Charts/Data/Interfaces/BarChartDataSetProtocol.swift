@@ -44,4 +44,9 @@ public protocol BarChartDataSetProtocol: BarLineScatterCandleBubbleChartDataSetP
   var topBorderColor : UIColor { get set }
   var topBorderCornerRadius : CGFloat { get set }
   var topBorderWidth : CGFloat { get set }
+  
+  var drawBottomBorder: Bool { get set }
+  var bottomBorderColor : UIColor { get set }
+  var bottomBorderCornerRadius : CGFloat { get set }
+  var bottomBorderWidth : CGFloat { get set }
 }

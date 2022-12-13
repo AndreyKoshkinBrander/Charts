@@ -106,6 +106,11 @@ open class BarChartDataSet: BarLineScatterCandleBubbleChartDataSet, BarChartData
   open var topBorderColor: UIColor = .black
   open var topBorderCornerRadius: CGFloat = 0
   open var topBorderWidth: CGFloat = 0
+  
+  open var drawBottomBorder: Bool = false
+  open var bottomBorderColor: UIColor = .black
+  open var bottomBorderCornerRadius: CGFloat = 0
+  open var bottomBorderWidth: CGFloat = 0
     
     // MARK: - Styling functions and accessors
     
