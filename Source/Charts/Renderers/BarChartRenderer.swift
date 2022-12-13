@@ -401,6 +401,14 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
           dataSet.topBorderColor.setFill()
           context.drawPath(using: .fill)
         }
+          
+          if dataSet.drawBottomBorder {
+            let borderRect = CGRect(x: barRect.origin.x, y: barRect.origin.y + barRect.size.height, width: barRect.size.width, height: dataSet.bottomBorderWidth)
+            let bezierPath = UIBezierPath(roundedRect: borderRect, byRoundingCorners: [.bottomLeft, .bottomRight], cornerRadii: CGSize(width: dataSet.bottomBorderCornerRadius, height: dataSet.bottomBorderCornerRadius))
+            context.addPath(bezierPath.cgPath)
+            dataSet.bottomBorderColor.setFill()
+            context.drawPath(using: .fill)
+          }
             
             if drawBorder
             {
