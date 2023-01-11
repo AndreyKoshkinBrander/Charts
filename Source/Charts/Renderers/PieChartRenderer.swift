@@ -122,9 +122,9 @@ open class PieChartRenderer: NSObject, DataRenderer
         let entryCount = dataSet.entryCount
         let drawAngles = chart.drawAngles
         let center = chart.centerCircleBox
-        let radius = chart.radius
+        var radius = chart.radius
         let drawInnerArc = chart.drawHoleEnabled && !chart.drawSlicesUnderHoleEnabled
-        let userInnerRadius = drawInnerArc ? radius * chart.holeRadiusPercent : 0.0
+        var userInnerRadius = drawInnerArc ? radius * chart.holeRadiusPercent : 0.0
 
         var visibleAngleCount = 0
         for j in 0 ..< entryCount
@@ -157,8 +157,10 @@ open class PieChartRenderer: NSObject, DataRenderer
         element.isHeader = true
         accessibleChartElements.append(element)
 
+        let radiusShift = dataSet.isRadiusShiftEnabled ? dataSet.radiusShift : .zero
         for j in 0 ..< entryCount
         {
+            userInnerRadius = userInnerRadius + radiusShift
             let sliceAngle = drawAngles[j]
             var innerRadius = userInnerRadius
 
@@ -286,6 +288,7 @@ open class PieChartRenderer: NSObject, DataRenderer
             }
 
             accessibleChartElements.append(axElement)
+            radius = radius - radiusShift
         }
 
         // Post this notification to let VoiceOver account for the redrawn frames

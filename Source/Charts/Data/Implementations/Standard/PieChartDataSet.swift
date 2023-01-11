@@ -72,6 +72,8 @@ open class PieChartDataSet: ChartDataSet, PieChartDataSetProtocol
 
     /// indicates the selection distance of a pie slice
     open var selectionShift = CGFloat(18.0)
+    open var radiusShift: CGFloat = 10
+    open var isRadiusShiftEnabled: Bool = false
 
     open var xValuePosition: ValuePosition = .insideSlice
     open var yValuePosition: ValuePosition = .insideSlice

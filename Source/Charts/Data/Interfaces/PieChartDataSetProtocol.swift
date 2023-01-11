@@ -27,6 +27,8 @@ public protocol PieChartDataSetProtocol: ChartDataSetProtocol
 
     /// indicates the selection distance of a pie slice
     var selectionShift: CGFloat { get set }
+    var radiusShift: CGFloat { get set }
+    var isRadiusShiftEnabled: Bool { get set }
 
     var xValuePosition: PieChartDataSet.ValuePosition { get set }
     var yValuePosition: PieChartDataSet.ValuePosition { get set }
