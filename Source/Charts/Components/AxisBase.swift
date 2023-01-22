@@ -78,6 +78,8 @@ open class AxisBase: ComponentBase
     /// the actual array of entries
     @objc open var entries = [Double]()
     
+    open var entriesPositions = [Int: Double]()
+
     /// axis label entries only used for centered labels
     @objc open var centeredEntries = [Double]()
     
@@ -142,12 +144,16 @@ open class AxisBase: ComponentBase
     }
     
     /// - Returns: The formatted label at the specified index. This will either use the auto-formatter or the custom formatter (if one is set).
-    @objc open func getFormattedLabel(_ index: Int) -> String
-    {
-        guard entries.indices.contains(index) else { return "" }
-        
-        return valueFormatter?.stringForValue(entries[index], axis: self) ?? ""
-    }
+      @objc open func getFormattedLabel(_ index: Int) -> String {
+        let entriesPositionsEnabled = !entriesPositions.isEmpty
+        if entriesPositionsEnabled {
+          return valueFormatter?.stringForValue(entriesPositions[index] ?? .zero, axis: self) ?? ""
+        } else {
+          guard entries.indices.contains(index) else { return "" }
+          return valueFormatter?.stringForValue(entries[index], axis: self) ?? ""
+        }
+    
+      }
     
     /// Sets the formatter to be used for formatting the axis labels.
     /// If no formatter is set, the chart will automatically determine a reasonable formatting (concerning decimals) for all the values that are drawn inside the chart.

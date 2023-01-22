@@ -203,7 +203,17 @@ open class YAxisRenderer: NSObject, AxisRenderer
     {
         guard let transformer = self.transformer else { return [] }
         
-        var positions = axis.entries.map { CGPoint(x: 0.0, y: $0) }
+        let entriesPositionsEnabled = !axis.entriesPositions.isEmpty
+    
+        var positions = [CGPoint]()
+        if entriesPositionsEnabled {
+          for i in 0..<axis.entriesPositions.count {
+            positions.append(CGPoint(x: 0.0, y: axis.entriesPositions[i] ?? .zero))
+          }
+        } else {
+          positions = axis.entries.map { CGPoint(x: 0.0, y: $0) }
+        }
+
         transformer.pointValuesToPixel(&positions)
         
         return positions

@@ -269,10 +269,16 @@ open class XAxisRenderer: NSObject, AxisRenderer
         }
         
         let entries = axis.entries
+        let entriesPositions = axis.entriesPositions
+        let entriesPositionsEnabled = !entriesPositions.isEmpty
+        let labelsCount = entriesPositionsEnabled ? entriesPositions.count : entries.count
         
-        for i in entries.indices
-        {
-            let px = isCenteringEnabled ? CGFloat(axis.centeredEntries[i]) : CGFloat(entries[i])
+        for i in 0..<labelsCount {
+            let px = entriesPositionsEnabled ?
+            entriesPositions[i] ?? .zero :
+            (isCenteringEnabled ? CGFloat(axis.centeredEntries[i]) : CGFloat(entries[i]))
+        
+
             position = CGPoint(x: px, y: 0)
                 .applying(valueToPixelMatrix)
 
