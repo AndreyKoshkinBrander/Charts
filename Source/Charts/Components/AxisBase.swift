@@ -84,7 +84,9 @@ open class AxisBase: ComponentBase
     @objc open var centeredEntries = [Double]()
     
     /// the number of entries the legend contains
-    @objc open var entryCount: Int { return entries.count }
+    @objc open var entryCount: Int {
+      return entriesPositions.isEmpty ? entries.count : entriesPositions.count
+    }
     
     /// the number of label entries the axis should have
     ///
