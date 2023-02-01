@@ -23,4 +23,5 @@ public protocol BarLineScatterCandleBubbleChartDataSetProtocol: ChartDataSetProt
     var highlightLineWidth: CGFloat { get set }
     var highlightLineDashPhase: CGFloat { get set }
     var highlightLineDashLengths: [CGFloat]? { get set }
+    var gradientColors: [UIColor] { get set }
 }

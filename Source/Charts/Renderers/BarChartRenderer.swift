@@ -740,9 +740,6 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 
                 let trans = dataProvider.getTransformer(forAxis: set.axisDependency)
                 
-                context.setFillColor(set.highlightColor.cgColor)
-                context.setAlpha(set.highlightAlpha)
-                
                 let isStack = high.stackIndex >= 0 && e.isStacked
                 
                 let y1: Double
@@ -773,7 +770,28 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 
                 setHighlightDrawPos(highlight: high, barRect: barRect)
                 
-                context.fill(barRect)
+                if set.gradientColors.isEmpty {
+                  context.setFillColor(set.highlightColor.cgColor)
+                  context.setAlpha(set.highlightAlpha)
+                  context.fill(barRect)
+                } else {
+                  let fillColors = set.gradientColors.map { $0.cgColor }
+                  let locations: [CGFloat] = [0.0, 1.0]
+                  context.saveGState()
+                  context.clip(to: barRect)
+                  let gradient: CGGradient
+                  let colorspace: CGColorSpace
+                  colorspace = CGColorSpaceCreateDeviceRGB()
+                
+                  gradient = CGGradient(colorsSpace: colorspace, colors: fillColors as  CFArray, locations: locations)!
+                
+                  //Vertical Gradient
+                  let startPoint: CGPoint = CGPoint(x: 0.0, y: viewPortHandler.contentBottom)
+                  let endPoint: CGPoint = CGPoint(x: 0.0, y: viewPortHandler.contentTop)
+                
+                  context.drawLinearGradient(gradient, start: startPoint, end: endPoint,  options: .init(rawValue: 0))
+                  context.restoreGState()
+                }
             }
         }
     }

@@ -23,6 +23,7 @@ open class BarLineScatterCandleBubbleChartDataSet: ChartDataSet, BarLineScatterC
     open var highlightLineWidth = CGFloat(0.5)
     open var highlightLineDashPhase = CGFloat(0.0)
     open var highlightLineDashLengths: [CGFloat]?
+    open var gradientColors = [UIColor]()
     
     // MARK: - NSCopying
     
