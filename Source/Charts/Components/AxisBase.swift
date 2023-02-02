@@ -12,6 +12,22 @@
 import Foundation
 import CoreGraphics
 
+public struct HighlightedLabelAttributes {
+  let font: UIFont
+  let textColor: UIColor
+  let backgroundColor: UIColor
+  let isRounded: Bool
+  let insets: UIEdgeInsets
+  
+  public init(font: UIFont, textColor: UIColor, backgroundColor: UIColor, isRounded: Bool, insets: UIEdgeInsets = .zero) {
+    self.font = font
+    self.textColor = textColor
+    self.backgroundColor = backgroundColor
+    self.isRounded = isRounded
+    self.insets = insets
+  }
+}
+
 /// Base class for all axes
 @objc(ChartAxisBase)
 open class AxisBase: ComponentBase
@@ -26,6 +42,7 @@ open class AxisBase: ComponentBase
     
     @objc open var labelFont = NSUIFont.systemFont(ofSize: 10.0)
     @objc open var labelTextColor = NSUIColor.labelOrBlack
+    open var highlightedLabelAttributes: HighlightedLabelAttributes?
     
     @objc open var axisLineColor = NSUIColor.gray
     @objc open var axisLineWidth = CGFloat(0.5)
@@ -178,6 +195,8 @@ open class AxisBase: ComponentBase
             _axisValueFormatter = newValue ?? DefaultAxisValueFormatter(decimals: decimals)
         }
     }
+  
+    open var highlightDelegate: AxisHighlightValueDelegate?
     
     @objc open var isDrawGridLinesEnabled: Bool { return drawGridLinesEnabled }
     

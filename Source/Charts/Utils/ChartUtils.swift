@@ -242,9 +242,10 @@ extension CGContext
         return point
     }
     
-    func drawMultilineText(_ text: String, at point: CGPoint, constrainedTo size: CGSize, anchor: CGPoint, knownTextSize: CGSize, angleRadians: CGFloat, attributes: [NSAttributedString.Key : Any]?)
+    func drawMultilineText(_ text: String, at point: CGPoint, constrainedTo size: CGSize, anchor: CGPoint, knownTextSize: CGSize, angleRadians: CGFloat, attributes: [NSAttributedString.Key : Any]?, isHighlighted: Bool = false, highlightedLabelAttributes: HighlightedLabelAttributes? = nil)
     {
         var rect = CGRect(origin: .zero, size: knownTextSize)
+        var attributes = attributes
 
         NSUIGraphicsPushContext(self)
 
@@ -283,6 +284,27 @@ extension CGContext
 
             rect.origin.x += point.x
             rect.origin.y += point.y
+          
+            if let highlightedLabelAttributes = highlightedLabelAttributes,
+               isHighlighted {
+              let insets = highlightedLabelAttributes.insets
+              var rect = rect
+              rect.size.width += insets.left + insets.right
+              rect.size.height += insets.top + insets.bottom
+              rect.origin.x -= insets.left
+              rect.origin.y -= insets.top
+              let clipPath = UIBezierPath(roundedRect: rect, cornerRadius: highlightedLabelAttributes.isRounded ? rect.size.height / 2 : .zero).cgPath
+            
+              let ctx = UIGraphicsGetCurrentContext()!
+              ctx.addPath(clipPath)
+              ctx.setFillColor(highlightedLabelAttributes.backgroundColor.cgColor)
+            
+              ctx.closePath()
+              ctx.fillPath()
+            
+              attributes?[.font] = highlightedLabelAttributes.font
+              attributes?[.foregroundColor] = highlightedLabelAttributes.textColor
+            }
 
             (text as NSString).draw(with: rect, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
         }
@@ -290,9 +312,9 @@ extension CGContext
         NSUIGraphicsPopContext()
     }
 
-    func drawMultilineText(_ text: String, at point: CGPoint, constrainedTo size: CGSize, anchor: CGPoint, angleRadians: CGFloat, attributes: [NSAttributedString.Key : Any]?)
+    func drawMultilineText(_ text: String, at point: CGPoint, constrainedTo size: CGSize, anchor: CGPoint, angleRadians: CGFloat, attributes: [NSAttributedString.Key : Any]?, isHighlighted: Bool = false, highlightedLabelAttributes: HighlightedLabelAttributes? = nil)
     {
         let rect = text.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-        drawMultilineText(text, at: point, constrainedTo: size, anchor: anchor, knownTextSize: rect.size, angleRadians: angleRadians, attributes: attributes)
+        drawMultilineText(text, at: point, constrainedTo: size, anchor: anchor, knownTextSize: rect.size, angleRadians: angleRadians, attributes: attributes, isHighlighted: isHighlighted, highlightedLabelAttributes: highlightedLabelAttributes)
     }
 }

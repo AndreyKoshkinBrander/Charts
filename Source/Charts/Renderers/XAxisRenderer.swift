@@ -286,6 +286,7 @@ open class XAxisRenderer: NSObject, AxisRenderer
             
             let label = axis.valueFormatter?.stringForValue(entriesPositionsEnabled ? Double(i) : entries[i], axis: axis) ?? ""
             let labelns = label as NSString
+            let isHighlighted = axis.highlightDelegate?.isHighlighted(index: i, axis: axis) ?? false
             
             if axis.isAvoidFirstLastClippingEnabled
             {
@@ -314,11 +315,14 @@ open class XAxisRenderer: NSObject, AxisRenderer
                       attributes: labelAttrs,
                       constrainedTo: labelMaxSize,
                       anchor: anchor,
-                      angleRadians: labelRotationAngleRadians)
+                      angleRadians: labelRotationAngleRadians,
+                      isHighlighted: isHighlighted,
+                      highlightedLabelAttributes: axis.highlightedLabelAttributes)
+
         }
     }
     
-    @objc open func drawLabel(
+    open func drawLabel(
         context: CGContext,
         formattedLabel: String,
         x: CGFloat,
@@ -326,14 +330,18 @@ open class XAxisRenderer: NSObject, AxisRenderer
         attributes: [NSAttributedString.Key : Any],
         constrainedTo size: CGSize,
         anchor: CGPoint,
-        angleRadians: CGFloat)
+        angleRadians: CGFloat,
+        isHighlighted: Bool,
+        highlightedLabelAttributes: HighlightedLabelAttributes?)
     {
         context.drawMultilineText(formattedLabel,
                                   at: CGPoint(x: x, y: y),
                                   constrainedTo: size,
                                   anchor: anchor,
                                   angleRadians: angleRadians,
-                                  attributes: attributes)
+                                  attributes: attributes,
+                                  isHighlighted: isHighlighted,
+                                  highlightedLabelAttributes: highlightedLabelAttributes)
     }
     
     open func renderGridLines(context: CGContext)

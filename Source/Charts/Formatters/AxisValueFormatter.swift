@@ -28,3 +28,8 @@ public protocol AxisValueFormatter: AnyObject
                         axis: AxisBase?) -> String
     
 }
+
+public protocol AxisHighlightValueDelegate: AnyObject {
+  func isHighlighted(index: Int,
+                     axis: AxisBase?) -> Bool
+}
