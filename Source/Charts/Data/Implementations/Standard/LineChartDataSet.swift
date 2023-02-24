@@ -115,6 +115,8 @@ open class LineChartDataSet: LineRadarChartDataSet, LineChartDataSetProtocol
     
     /// If true, drawing circles is enabled
     open var drawCirclesEnabled = true
+  
+    open var drawOnlyFirstAndLastCirclesEnabled = false
     
     /// `true` if drawing circles for this DataSet is enabled, `false` ifnot
     open var isDrawCirclesEnabled: Bool { return drawCirclesEnabled }

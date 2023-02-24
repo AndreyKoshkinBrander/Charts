@@ -660,6 +660,10 @@ open class LineChartRenderer: LineRadarRenderer
             
             for j in _xBounds
             {
+                let shouldNotAdd = dataSet.drawOnlyFirstAndLastCirclesEnabled && (j != 0 && j != _xBounds.max)
+                if shouldNotAdd {
+                  continue
+                }
                 guard let e = dataSet.entryForIndex(j) else { break }
 
                 pt.x = CGFloat(e.x)

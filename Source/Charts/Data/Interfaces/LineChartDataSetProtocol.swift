@@ -57,6 +57,8 @@ public protocol LineChartDataSetProtocol: LineRadarChartDataSetProtocol
     
     /// If true, drawing circles is enabled
     var drawCirclesEnabled: Bool { get set }
+  
+    var drawOnlyFirstAndLastCirclesEnabled: Bool { get set }
     
     /// `true` if drawing circles for this DataSet is enabled, `false` ifnot
     var isDrawCirclesEnabled: Bool { get }
