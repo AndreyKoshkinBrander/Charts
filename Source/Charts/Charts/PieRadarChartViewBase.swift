@@ -37,6 +37,8 @@ open class PieRadarChartViewBase: ChartViewBase
     private var _rotationWithTwoFingers = false
     
     private var _tapGestureRecognizer: NSUITapGestureRecognizer!
+    private var _panGestureRecognizer: NSUIPanGestureRecognizer!
+
     #if !os(tvOS)
     private var _rotationGestureRecognizer: NSUIRotationGestureRecognizer!
     #endif
@@ -61,8 +63,11 @@ open class PieRadarChartViewBase: ChartViewBase
         super.initialize()
         
         _tapGestureRecognizer = NSUITapGestureRecognizer(target: self, action: #selector(tapGestureRecognized(_:)))
+        _panGestureRecognizer = NSUIPanGestureRecognizer(target: self, action: #selector(panGestureRecognized(_:)))
+
         
         self.addGestureRecognizer(_tapGestureRecognizer)
+        self.addGestureRecognizer(_panGestureRecognizer)
 
         #if !os(tvOS)
         _rotationGestureRecognizer = NSUIRotationGestureRecognizer(target: self, action: #selector(rotationGestureRecognized(_:)))
@@ -810,6 +815,20 @@ open class PieRadarChartViewBase: ChartViewBase
             self.highlightValue(high, callDelegate: true)
         }
     }
+  
+    @objc
+    private func panGestureRecognized(_ recognizer: NSUIPanGestureRecognizer) {
+      if recognizer.state == NSUIGestureRecognizerState.changed
+      {
+          if !self.highlightPerPanningEnabled { return }
+          
+          let location = recognizer.location(in: self)
+          
+          let high = self.getHighlightByTouchPoint(location)
+          self.highlightValue(high, callDelegate: true)
+      }
+    }
+
     
     #if !os(tvOS)
     @objc private func rotationGestureRecognized(_ recognizer: NSUIRotationGestureRecognizer)

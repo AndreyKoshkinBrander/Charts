@@ -331,6 +331,8 @@ open class ChartViewBase: NSUIView, ChartDataProvider, AnimatorDelegate
     {
         return highlightPerTapEnabled
     }
+  
+    @objc open var highlightPerPanningEnabled: Bool = false
     
     /// Checks if the highlight array is null, has a length of zero or if the first object is null.
     ///
