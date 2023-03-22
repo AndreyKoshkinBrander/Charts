@@ -676,7 +676,7 @@ open class LineChartRenderer: LineRadarRenderer
                 }
                 
                 // make sure the circles don't do shitty things outside bounds
-                if (!viewPortHandler.isInBoundsLeft(pt.x) || !viewPortHandler.isInBoundsY(pt.y))
+                if !dataSet.canCirclesOverlay && (!viewPortHandler.isInBoundsLeft(pt.x) || !viewPortHandler.isInBoundsY(pt.y))
                 {
                     continue
                 }
