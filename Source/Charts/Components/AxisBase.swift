@@ -196,7 +196,7 @@ open class AxisBase: ComponentBase
         }
     }
   
-    open var highlightDelegate: AxisHighlightValueDelegate?
+    open weak var highlightDelegate: AxisHighlightValueDelegate?
     
     @objc open var isDrawGridLinesEnabled: Bool { return drawGridLinesEnabled }
     
