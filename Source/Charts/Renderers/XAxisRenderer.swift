@@ -284,7 +284,7 @@ open class XAxisRenderer: NSObject, AxisRenderer
 
             guard viewPortHandler.isInBoundsX(position.x) else { continue }
             
-            let label = axis.valueFormatter?.stringForValue(entriesPositionsEnabled ? Double(i) : entries[i], axis: axis) ?? ""
+            let label = axis.valueFormatter?.stringForValue(entriesPositionsEnabled ? entriesPositions[i] ?? .zero : Double(i), axis: axis) ?? ""
             let labelns = label as NSString
             let isHighlighted = axis.highlightDelegate?.isHighlighted(index: i, axis: axis) ?? false
             
