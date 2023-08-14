@@ -373,6 +373,9 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
             guard viewPortHandler.isInBoundsLeft(barRect.origin.x + barRect.size.width) else { continue }
             guard viewPortHandler.isInBoundsRight(barRect.origin.x) else { break }
 
+          context.beginPath()
+          context.addPath(UIBezierPath(roundedRect: barRect, byRoundingCorners: dataSet.barCorners, cornerRadii: CGSize(width: dataSet.barCornerRadius, height: dataSet.barCornerRadius)).cgPath)
+
           if !isSingleColor {
             let fillColors = [dataSet.color(atIndex: 0).cgColor, dataSet.color(atIndex: 1).cgColor]
             let locations: [CGFloat] = [0.0, 1.0]
@@ -391,7 +394,7 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
             context.drawLinearGradient(gradient, start: startPoint, end: endPoint, options: .init(rawValue: 0))
             context.restoreGState()
           } else {
-            context.fill(barRect)
+            context.drawPath(using: .fill)
           }
         
         if dataSet.drawTopBorder {

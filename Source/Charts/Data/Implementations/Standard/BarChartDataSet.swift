@@ -102,6 +102,9 @@ open class BarChartDataSet: BarLineScatterCandleBubbleChartDataSet, BarChartData
     /// array of labels used to describe the different values of the stacked bars
     open var stackLabels: [String] = []
   
+  open var barCornerRadius: CGFloat = 0
+  open var barCorners: UIRectCorner = UIRectCorner()
+  
   open var drawTopBorder: Bool = false
   open var topBorderColor: UIColor = .black
   open var topBorderCornerRadius: CGFloat = 0
